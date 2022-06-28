@@ -26,8 +26,6 @@ which defects4j &> /dev/null || error_out "Defects4J not installed"
 #Output active projects in Defects4J
 PROJS=($(defects4j pids))
 
-mkdir -p setup
-
 proj_bids=()
 #For each project, collect active bug ids
 for proj in ${PROJS[@]}
@@ -38,5 +36,5 @@ do
 	done
 done
 
-printf "%s\n" "${proj_bids[@]}" | head -1 | "$EXECUTOR" -I@ bash run_single.sh @
+printf "%s\n" "${proj_bids[@]}" | "$EXECUTOR" -I@ bash run_single.sh @
 docker rm $(docker ps -a -q)
