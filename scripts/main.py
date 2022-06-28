@@ -23,11 +23,12 @@ def call(command, timeout=None):
 def run(project, version):
     path = project_path(project, version)
     pwd = os.getcwd()
+    home_dir = os.path.expanduser("~") #retrieves home directory; assumes maven is installed, i.e. $HOME/.m2 exists
     image = "qsfljdk8" if project == "Mockito" else "qsfl"
     start = time.time()
     #run docker command
-    cmd = "docker run -it -v {}/data:/data {} python3 run_experiment.py {} {}"\
-            .format(pwd, image, project, version)
+    cmd = "docker run -i -v {}/.m2:/var/maven/.m2 -v {}/data:/data -e MAVEN_CONFIG=/var/maven/.m2 {} python3 run_experiment.py {} {}"\
+            .format(home_dir, pwd, image, project, version)
     call(cmd)
 
     #check if directory was created

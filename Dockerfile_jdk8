@@ -1,5 +1,11 @@
 FROM maven:3-jdk-8
 
+ARG USER_ID
+ARG GROUP_ID
+
+RUN addgroup --gid $GROUP_ID user
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
+
 RUN \
     apt-get update && \
     apt-get install -y wget python3-pip python3-yaml git subversion && \
@@ -20,9 +26,12 @@ RUN \
     mvn -q package
 
 RUN mkdir /data
+RUN chown user /data
 
 WORKDIR /home/
+RUN chown user /home
 COPY scripts/run_experiment.py /home/
 COPY experiment.yml /home/
 
+USER user
 CMD ["bash"]
