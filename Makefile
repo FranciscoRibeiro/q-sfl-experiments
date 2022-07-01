@@ -3,7 +3,7 @@
 CONTAINER=qsfl
 CONTAINERJDK8=qsfljdk8
 DOCKERFILEJDK8=Dockerfile_jdk8
-QSFL=https://github.com/aperez/q-sfl.git
+QSFL=https://github.com/FranciscoRibeiro/q-sfl.git
 FLDATA=https://bitbucket.org/rjust/fault-localization-data.git
 U_ID=$(shell id -u)
 G_ID=$(shell id -g)
