@@ -2,6 +2,28 @@
 project=$1
 bug_id=$2
 
-echo "started $project $i" >> log.txt
+# Function to stop the container, i.e. docker kill, if it times out
+# Also logs the situation and exits
+container_timeout () {
+	docker kill $(docker ps -a -q)
+	docker rm $(docker ps -a -q)
+	echo "container timed out $project $bug_id" >> log.txt
+	exit 1
+}
+
+calculations_timeout () {
+	echo "calculations timed out $project $bug_id" >> log.txt
+	exit 1
+}
+
+echo "started $project $bug_id" >> log.txt
 python3 scripts/main.py $project $bug_id
-echo "finished $project $i" >> log.txt
+
+# main.py handles its own timeout, i.e. the 'timeout' command is not invoked here.
+# The container does not stop appropriately using the 'timeout' command without sending the KILL signal
+[[ "$?" -eq 124 ]] && container_timeout
+
+timeout 10m python3 scripts/calculations.py $project $bug_id
+[[ "$?" -eq 124 ]] && calculations_timeout
+
+echo "finished $project $bug_id" >> log.txt
