@@ -22,6 +22,7 @@ python3 scripts/main.py $project $bug_id
 # main.py handles its own timeout, i.e. the 'timeout' command is not invoked here.
 # The container does not stop appropriately using the 'timeout' command without sending the KILL signal
 [[ "$?" -eq 124 ]] && container_timeout
+docker rm $(docker ps -a -q)
 
 timeout 10m python3 scripts/calculations.py $project $bug_id
 [[ "$?" -eq 124 ]] && calculations_timeout
