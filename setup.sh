@@ -30,11 +30,11 @@ proj_bids=()
 #For each project, collect active bug ids
 for proj in ${PROJS[@]}
 do
+	mkdir -p logs/$proj
 	for bid in $(defects4j bids -p "$proj" -A)
 	do
 		proj_bids+=("$proj $bid")
 	done
 done
 
-printf "%s\n" "${proj_bids[@]}" | "$EXECUTOR" -I@ bash run_single.sh @
-docker rm $(docker ps -a -q)
+printf "%s\n" "${proj_bids[@]}" | "$EXECUTOR" -n2 bash -c 'bash run_single.sh $0 $1 &> logs/$0/$1.txt'

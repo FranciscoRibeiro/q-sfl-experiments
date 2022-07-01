@@ -16,6 +16,7 @@ calculations_timeout () {
 	exit 1
 }
 
+SECONDS=0
 echo "started $project $bug_id" >> log.txt
 python3 scripts/main.py $project $bug_id
 
@@ -28,3 +29,4 @@ timeout 10m python3 scripts/calculations.py $project $bug_id
 [[ "$?" -eq 124 ]] && calculations_timeout
 
 echo "finished $project $bug_id" >> log.txt
+echo $SECONDS >> logs/$project/$bug_id.txt
