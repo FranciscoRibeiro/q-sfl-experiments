@@ -31,7 +31,7 @@ proj_bids=()
 for proj in ${PROJS[@]}
 do
 	mkdir -p logs/$proj
-	for bid in $(defects4j bids -p "$proj" -A)
+	for bid in $(defects4j bids -p "$proj")
 	do
 		proj_bids+=("$proj $bid")
 	done
