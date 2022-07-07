@@ -80,6 +80,6 @@ def validate_checkout(project, version):
 if __name__ == "__main__":
     project = sys.argv[1]
     version = sys.argv[2]
-    for f in [validate_checkout, checkout, run, export]:
+    for f in [checkout, run, export]:
         if not f(project, version):
             break
