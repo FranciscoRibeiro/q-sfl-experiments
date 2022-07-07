@@ -8,16 +8,16 @@ RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
 
 RUN \
     apt-get update && \
-    apt-get install -y wget python3-pip python3-yaml git subversion && \
+    apt-get install -y wget python3-pip python3-yaml git subversion libdbi-perl && \
     rm -rf /var/lib/apt/lists/*
 
 RUN \
-    wget https://github.com/rjust/defects4j/archive/v1.1.0.tar.gz && \
-    tar xf v1.1.0.tar.gz && \
-    cd defects4j-1.1.0 && \
+    wget https://github.com/rjust/defects4j/archive/refs/tags/v2.0.0.tar.gz && \
+    tar xf v2.0.0.tar.gz && \
+    cd defects4j-2.0.0 && \
     ./init.sh
 
-ENV PATH="/defects4j-1.1.0/framework/bin/:${PATH}"
+ENV PATH="/defects4j-2.0.0/framework/bin/:${PATH}"
 ENV TZ="America/Los_Angeles"
 
 COPY q-sfl/ /q-sfl/

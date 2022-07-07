@@ -2,7 +2,7 @@
 base-path: "/home"
 data-path: "/data"
 d4j:
-    path: "/defects4j-1.1.0/framework/"
+    path: "/defects4j-2.0.0/framework/"
     junit: "projects/lib/junit-4.11.jar"
     test-property: "tests.relevant" # alternative: "tests.all" and "tests.trigger"
     loaded-classes: "projects/{}/loaded_classes/{}.src"
