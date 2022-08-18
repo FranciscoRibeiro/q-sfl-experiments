@@ -38,6 +38,9 @@ def run(project, version):
         classpath = ":".join([bootsrapper, junit, f.readline().rstrip()])
         agent_options = "".join(["{", exp['instrumenter']['options'].replace(" ", ""), "}"])
         try:
+            print(">>>>>")
+            print(agent_options)
+            print("<<<<<")
             result = call("java -javaagent:{}={} -cp {} {} {} {}".format(
                           exp['instrumenter']['agent'],
                           agent_options,

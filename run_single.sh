@@ -25,7 +25,8 @@ python3 scripts/main.py $project $bug_id
 [[ "$?" -eq 124 ]] && container_timeout
 docker rm $(docker ps -a -q)
 
-timeout 10m python3 scripts/calculations.py $project $bug_id
+#timeout 10m python3 scripts/calculations.py $project $bug_id
+python3 scripts/calculations.py $project $bug_id
 [[ "$?" -eq 124 ]] && calculations_timeout
 
 echo "finished $project $bug_id" >> log.txt
