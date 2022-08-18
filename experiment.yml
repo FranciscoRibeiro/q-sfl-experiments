@@ -4,7 +4,7 @@ data-path: "/data"
 d4j:
     path: "/defects4j-2.0.0/framework/"
     junit: "projects/lib/junit-4.11.jar"
-    test-property: "tests.relevant" # alternative: "tests.all" and "tests.trigger"
+    test-property: "tests.all" # alternative: "tests.all" and "tests.trigger"
     loaded-classes: "projects/{}/loaded_classes/{}.src"
     projects:
         Chart: [1, 26]
@@ -22,6 +22,7 @@ instrumenter:
     options: >-
         "granularityLevel":"method",
         "filterClassNames":true,
-        "instrumentParameters":true,
+        "instrumentParameters":false,
+        "instrumentLandmarks":true,
         "maxValueProbes":10000,
         "prefixesToFilter":["ch.qos.logback","org.slf4j","junit","org.junit","org.hamcrest"]
