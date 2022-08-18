@@ -1,6 +1,6 @@
 #!/bin/sh
 
-EXECUTOR=xargs
+EXECUTOR="seq"
 
 error_out () {
 	local msg="$1"
@@ -12,7 +12,7 @@ while getopts "p" opt
 do
 	case "$opt" in
 		p) #-p runs in parallel mode
-			EXECUTOR=parallel
+			EXECUTOR="par"
 			;;
 		*)
 			error_out "Incorrect usage"
@@ -37,4 +37,13 @@ do
 	done
 done
 
-printf "%s\n" "${proj_bids[@]}" | "$EXECUTOR" -n2 bash -c 'bash run_single.sh $0 $1 &> logs/$0/$1.txt'
+case "$EXECUTOR" in
+	"seq")
+		echo "Sequential"
+		printf "%s\n" "${proj_bids[@]}" | xargs -n2 bash -c 'bash run_single.sh $0 $1 &> logs/$0/$1.txt'
+		;;
+	"par")
+		echo "Parallel"
+		printf "%s\n" "${proj_bids[@]}" | parallel -C ' ' "bash run_single.sh {1} {2} &> logs/{1}/{2}.txt"
+		;;
+esac
